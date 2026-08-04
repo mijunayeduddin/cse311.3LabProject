@@ -1,0 +1,539 @@
+// color variables
+@import "../collections/colors";
+
+// button
+@import "../collections/button";
+
+// toggle button
+@import "../collections/hover";
+
+// horizontal line
+@import "../collections/hr";
+
+// popup
+@import "../collections/popup";
+
+// input box
+@import "../collections/input";
+
+// border radius
+$radius: 0.2rem;
+
+@mixin container-style() {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: $radius;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: 'Trebuchet MS';
+  font-weight: 900;
+  letter-spacing: 0.05rem;
+  background-color: $white;
+  color: $grey-800;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  color: $white;
+  text-decoration: none;
+}
+
+table {
+  border-radius: $radius;
+  padding: 0.5rem;
+  width: 100%;
+  font-size: 0.9rem;
+  @include hover-content();
+}
+
+table:hover {
+  @include hover-state();
+}
+
+th {
+  color: $white;
+  background-color: $teal-800;
+  background-image: linear-gradient(to right, $teal-600, $teal-400);
+  padding: 0 0.2rem 0 0.2rem;
+  border-radius: $radius;
+}
+
+td {
+  color: $teal-600;
+  border: 0.1rem solid $teal-600;
+  border-radius: $radius;
+  padding: 0.4rem;
+}
+
+// ============================================= container ============================================= //
+.container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 2fr 8fr;
+  grid-template-rows: 0fr 1fr 0fr;
+  grid-template-areas:
+    "nav nav nav nav"
+    "sidebar main main main"
+    "footer footer footer footer";
+
+  &__nav {
+    grid-area: nav;
+    @include container-style();
+    margin: 0;
+    border-radius: 0;
+    background-color: $teal-700;
+    background-image: linear-gradient(to right, $teal-600, $teal-400);
+  }
+
+  &__sidebar {
+    grid-area: sidebar;
+    @include container-style();
+    margin-right: 0;
+    border: 0.15rem solid $teal-200;
+  }
+
+  &__main {
+    grid-area: main;
+    @include container-style();
+    border: 0.15rem solid $teal-200;
+  }
+
+  &__footer {
+    grid-area: footer;
+    @include container-style();
+    margin: 0;
+    border-radius: 0;
+    background-color: $teal-700;
+    background-image: linear-gradient(to right, $teal-600, $teal-400);
+  }
+}
+// ============================================= container ============================================= //
+
+// ============================================= navbar ============================================= //
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__branding {
+    font-size: 1.5rem;
+  }
+
+  &__menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  &__btn-logout {
+    @include btn-design($red-700, $red-500);
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border-radius: 1rem;
+  }
+
+  &__hamburger {
+    display: none;
+    cursor: pointer;
+  }
+
+  &__bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: $white;
+  }
+}
+// ============================================= navbar ============================================= //
+
+// ============================================= sidebar ============================================= //
+.sidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__filter {
+    display: flex;
+    flex-direction: column;
+    margin: 0.2rem;
+    width: 100%;
+  }
+
+  &__filter-btn {
+    @include btn-design($teal-400, $blue-800);
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__filter-btn-archive {
+    @include btn-design($grey-700, $pink-800);
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    padding-right: 0.5rem;
+    font-family: none;
+    font-size: 1.2rem;
+  }
+}
+// ============================================= sidebar ============================================= //
+
+// ============================================= main ============================================= //
+
+// ------------- profile ------------- //
+.main-profile {
+  display: grid;
+  grid-template-areas:
+    "table"
+    "update";
+
+  &__table {
+    grid-area: table;
+  }
+
+  &__update {
+    grid-area: update;
+    @include hover-content();
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: $radius;
+  }
+}
+
+.profile-update-btn {
+  @include btn-design($deep-orange-700, $deep-orange-500);
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: $radius;
+  font-size: medium;
+  text-transform: capitalize;
+}
+
+@include popup();
+
+.popup {
+  & .popup__update-text {
+    @include hover-content();
+    background-color: $cyan-900;
+    color: $white;
+  }
+
+  &__submit {
+    width: 100%;
+  }
+
+  &__submit-btn {
+    @include btn-design($deep-orange-500, $deep-orange-700);
+    width: 100%;
+  }
+}
+
+// ------------- user input ------------- //
+.card {
+  padding: 1rem 0 0.5rem 0;
+  &__group {
+    height: 4rem;
+  }
+
+  &__input {
+    @include input();
+  }
+
+  &__label {
+    @include label();
+  }
+
+  &__email-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card__input:focus ~ .card__label,
+  .card__input:not(:placeholder-shown).card__input:not(:focus) ~ .card__label {
+    top: -3.65rem;
+    left: 0.8rem;
+    padding: 5px;
+    font-size: 0.8rem;
+    background-color: rgb(255, 255, 255);
+  }
+}
+
+@include input-autocomplete-animation();
+
+.grid-container-faculty {
+  display: grid;
+  gap: 4px;
+  grid-template-areas:
+    "fName fName lName lName"
+    "email email phone phone"
+    "dob dob country country"
+    "university university university university";
+}
+
+.grid-item-first-name {
+  grid-area: fName;
+}
+
+.grid-item-last-name {
+  grid-area: lName;
+}
+
+.grid-item-email {
+  grid-area: email;
+}
+
+.grid-item-phone {
+  grid-area: phone;
+}
+
+.grid-item-dob {
+  grid-area: dob;
+}
+
+.grid-item-country {
+  grid-area: country;
+}
+
+.grid-item-university {
+  grid-area: university;
+}
+
+// ------------- archive ------------- //
+.main {
+  display: grid;
+  grid-template-areas:
+    "search"
+    "content";
+
+  &__search {
+    grid-area: search;
+    @include container-style();
+    @include hover-content();
+    background-color: $teal-200;
+  }
+
+  &__search:hover {
+    @include hover-state();
+    transform: scale(1.005);
+  }
+
+  &__content {
+    grid-area: content;
+    @include container-style();
+    background-color: $teal-700;
+  }
+}
+
+.archive-box {
+  border-radius: $radius;
+  padding: 1rem;
+  margin: 0.5rem;
+  background-color: $teal-100;
+
+  &__logo {
+    background-color: white;
+  }
+
+  &__details {
+    background-color: white;
+  }
+}
+
+.archive-approve {
+  text-align: center;
+  background-color: $purple-800;
+  color: $white;
+  padding: 1rem;
+  border: none;
+  @include hover-content();
+}
+
+.archive-approve:hover {
+  background-color: $purple-600;
+  cursor: pointer;
+  @include hover-state();
+}
+
+.archive-deny {
+  text-align: center;
+  background-color: $red-800;
+  color: $white;
+  border: none;
+}
+
+.archive-deny:hover {
+  background-color: $red-600;
+  cursor: pointer;
+  @include hover-state();
+}
+
+// ------------- search ------------- //
+.search {
+  display: flex;
+
+  &__icon {
+    font-size: 20px;
+    padding: 0.2rem;
+    margin-right: 0.2rem;
+    color: $white;
+  }
+
+  &__box {
+    flex: 1;
+    width: 0;
+    border: none;
+    border-radius: 2rem;
+    outline: none;
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: 1rem;
+    padding-left: 0.8rem;
+    color: $teal-800;
+  }
+}
+
+// ============================================= main ============================================= //
+
+// ============================================= footer ============================================= //
+.footer {
+  display: flex;
+  justify-content: center;
+  color: $white;
+}
+// ============================================= footer ============================================= //
+
+// mobile device optimization
+@media only screen and (max-width: 992px) {
+  .container {
+    grid-template-columns: 3fr 8fr;
+  }
+
+  .popup {
+    & .popup__content {
+      width: 80vw;
+      height: max-content;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0fr 1fr 4fr 0fr;
+    grid-template-areas:
+      "nav"
+      "sidebar"
+      "main"
+      "footer";
+
+    &__nav {
+      grid-area: nav;
+    }
+
+    &__sidebar {
+      grid-area: sidebar;
+      margin-right: 0.5rem;
+      margin-bottom: 0;
+    }
+
+    &__main {
+      grid-area: main;
+    }
+
+    &__footer {
+      grid-area: footer;
+    }
+  }
+
+  .nav {
+    &__hamburger {
+      display: block;
+    }
+
+    &__hamburger.active .nav__bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    &__hamburger.active .nav__bar:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    &__hamburger.active .nav__bar:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    &__menu {
+      position: fixed;
+      top: -100%;
+      left: -100%;
+      gap: 0;
+      flex-direction: column;
+      background-color: $teal-400;
+      width: 100%;
+      text-align: center;
+      transition: 0.4s;
+    }
+
+    &__menu.active {
+      top: 0;
+      left: 0;
+    }
+
+    &__btn-register {
+      margin: 0.5rem 0 0 0;
+      width: 10rem;
+    }
+
+    &__btn-logout {
+      margin: 0.5rem;
+      width: 99%;
+    }
+  }
+
+  .popup {
+    & .popup__content {
+      display: inline-block;
+      overflow: scroll;
+      width: 90vw;
+      height: max-content;
+    }
+
+    & .popup__update-text {
+      font-size: large;
+    }
+
+    & .popup__close-btn {
+      font-size: 1.45rem;
+    }
+  }
+
+  .grid-container-student {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .grid-container-archive {
+    display: flex;
+    flex-direction: column;
+  }
+}

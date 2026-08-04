@@ -1,0 +1,340 @@
+// color variables
+@import "../collections/colors";
+
+// button
+@import "../collections/button";
+
+// toggle button
+@import "../collections/hover";
+
+// horizontal line
+@import "../collections/hr";
+
+// border radius
+$radius: 0.2rem;
+
+@mixin container-style() {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: $radius;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: 'Trebuchet MS';
+  font-weight: bold;
+  letter-spacing: 0.05rem;
+  background-color: $white;
+  color: $white;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  color: $white;
+  text-decoration: none;
+}
+
+table {
+  border-radius: $radius;
+  padding: 0.5rem;
+  width: 100%;
+  font-size: 0.9rem;
+  @include hover-content();
+}
+
+table:hover {
+  @include hover-state();
+}
+
+th {
+  color: $white;
+  background-color: $blue-grey-800;
+  background-image: linear-gradient(to right, $blue-grey-600, $blue-grey-500);
+  padding: 0 0.2rem 0 0.2rem;
+  border-radius: $radius;
+}
+
+td {
+  color: $blue-grey-600;
+  border: 0.1rem solid $blue-grey-600;
+  border-radius: $radius;
+  padding: 0.4rem;
+}
+
+// ============================================= container ============================================= //
+.container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 2fr 8fr;
+  grid-template-rows: 0fr 1fr 0fr;
+  grid-template-areas:
+    "nav nav nav nav"
+    "sidebar main main main"
+    "footer footer footer footer";
+
+  &__nav {
+    grid-area: nav;
+    @include container-style();
+    margin: 0;
+    border-radius: 0;
+    background-color: $blue-grey-700;
+    background-image: linear-gradient(to right, $blue-grey-600, $blue-grey-300);
+  }
+
+  &__sidebar {
+    grid-area: sidebar;
+    @include container-style();
+    margin-right: 0;
+    border: 0.15rem solid $blue-grey-100;
+  }
+
+  &__main {
+    grid-area: main;
+    @include container-style();
+    border: 0.15rem solid $blue-grey-100;
+  }
+
+  &__footer {
+    grid-area: footer;
+    @include container-style();
+    margin: 0;
+    border-radius: 0;
+    background-color: $blue-grey-700;
+  }
+}
+// ============================================= container ============================================= //
+
+// ============================================= navbar ============================================= //
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__logo {
+    width: 2rem;
+    width: 2rem;
+  }
+
+  &__menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  &__btn-register {
+    @include btn-design($teal-600, $teal-700);
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border-radius: 0.2rem;
+  }
+
+  &__btn-login {
+    @include btn-design($pink-400, $pink-500);
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border-radius: 0.2rem;
+  }
+
+  &__hamburger {
+    display: none;
+    cursor: pointer;
+  }
+
+  &__bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: $white;
+  }
+}
+// ============================================= navbar ============================================= //
+
+// ============================================= sidebar ============================================= //
+.sidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__filter {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+    width: 100%;
+  }
+
+  &__filter-btn {
+    @include btn-design($blue-grey-800, $blue-grey-600);
+    @include hover-content();    
+    padding: 0.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-image: linear-gradient(to right, $blue-grey-600, $blue-grey-300);
+  }
+
+  &__filter-btn:hover {
+    @include hover-state();
+  }
+}
+// ============================================= sidebar ============================================= //
+
+// ============================================= main ============================================= //
+.main {
+  display: grid;
+  grid-template-areas:
+    "search"
+    "content";
+
+  &__search {
+    grid-area: search;
+    @include container-style();
+    @include hover-content();
+    background-color: $blue-grey-200;
+  }
+
+  &__search:hover {
+    @include hover-state();
+    transform: scale(1.005);
+  }
+
+  &__content {
+    grid-area: content;
+    @include container-style();
+    background-color: $blue-grey-700;
+  }
+}
+// ============================================= main ============================================= //
+
+// ============================================= search ============================================= //
+.search {
+  display: flex;
+
+  &__icon {
+    font-size: 20px;
+    padding: 0.2rem;
+    margin-right: 0.2rem;
+    color: $white;
+  }
+
+  &__box {
+    flex: 1;
+    width: 0;
+    border: none;
+    border-radius: 2rem;
+    outline: none;
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: 1rem;
+    padding-left: 0.8rem;
+    color: $blue-grey-800;
+  }
+}
+// ============================================= search ============================================= //
+
+// ============================================= archive ============================================= //
+
+.archive-box {
+  border-radius: $radius;
+  padding: 1rem;
+  margin: 0.5rem;
+  background-color: $blue-grey-100;
+
+  &__logo {
+    background-color: white;
+  }
+
+  &__details {
+    background-color: white;
+  }
+}
+
+// ============================================= archive ============================================= //
+
+// ============================================= footer ============================================= //
+.footer {
+  display: flex;
+  justify-content: center;
+}
+// ============================================= footer ============================================= //
+
+// mobile device optimization
+@media only screen and (max-width: 992px) {
+  .container {
+    grid-template-columns: 3fr 8fr;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    grid-template-rows: 0fr 1fr 4fr 0fr;
+    grid-template-areas:
+      "nav nav nav nav"
+      "sidebar sidebar sidebar sidebar"
+      "main main main main"
+      "footer footer footer footer";
+
+    &__sidebar {
+      margin-right: 0.5rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .nav {
+    &__hamburger {
+      display: block;
+    }
+
+    &__hamburger.active .nav__bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    &__hamburger.active .nav__bar:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    &__hamburger.active .nav__bar:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    &__menu {
+      position: fixed;
+      top: -100%;
+      left: -100%;
+      gap: 0;
+      flex-direction: column;
+      background-color: $teal-400;
+      width: 100%;
+      text-align: center;
+      transition: 0.4s;
+      background-image: linear-gradient(to left, $blue-grey-200, $blue-grey-100);
+    }
+
+    &__menu.active {
+      top: 0;
+      left: 0;
+    }
+
+    &__btn-register {
+      margin: 0.5rem;
+      width: 10rem;
+    }
+    &__btn-login {
+      margin: 0.5rem 0 0 0;
+      width: 10rem;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+@mixin btn-design($btn-color, $btn-color-hover) {
+  padding: 0.8rem;
+  background-color: $btn-color;
+  color: white;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: small;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  border-radius: $radius;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 200ms linear;
+
+  &:hover {
+    background-color: $btn-color-hover;
+  }
+}

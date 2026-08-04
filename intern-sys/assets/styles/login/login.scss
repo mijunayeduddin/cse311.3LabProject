@@ -1,0 +1,328 @@
+// color variables
+@import "../collections/colors";
+
+// toggle button
+@import "../collections/button";
+
+// input box
+@import "../collections/input";
+
+// horizontal line
+@import "../collections/hr";
+
+// login button
+@mixin btn-login($btn-color, $btn-color-hover) {
+  @include btn-design($btn-color, $btn-color-hover);
+  width: 100%;
+  font-size: medium;
+}
+
+// login home button
+@mixin btn-login-home($btn-color, $btn-color-hover) {
+  @include btn-design($btn-color, $btn-color-hover);
+  border-radius: 5px 20px 5px;
+}
+
+// forgot password
+@mixin link-forgot-password($color) {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  color: $color;
+}
+
+// border radius
+$radius: 0.3rem;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: 'Trebuchet MS';
+  font-weight: 900;
+  letter-spacing: 0.05rem;
+  background-color: aliceblue;
+  color: $grey-700;
+}
+
+.box {
+  display: grid;
+  height: 100vh;
+  place-items: center;
+  grid-template-areas:
+    "navbar"
+    "main"
+    "footer";
+
+  &__navbar {
+    grid-area: navbar;
+    width: 90vw;
+    border-bottom: 2px solid $grey-500;
+    margin-top: 0.5rem;
+  }
+
+  &__logo {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &__main {
+    grid-area: main;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    grid-area: footer;
+    width: 95vw;
+    border-top: 2px solid $grey-500;
+  }
+
+  &__footer-text {
+    margin-bottom: 0.5rem;
+  }
+}
+
+// =============================== error handling =============================== //
+#error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $red-400;
+  color: $white;
+  font-size: small;
+  padding: 0.4rem;
+}
+
+#error-text {
+  font-size: 0.9rem;
+  padding-left: 1rem;
+}
+
+#error-close-btn {
+  @include btn-design($red-400, $red-400);
+  font-family: none;
+  padding: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#error-close-btn-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: $radius;
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+
+  // =============================== toggle buttons =============================== //
+  &__toggle-btn {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 0.2rem;
+  }
+
+  &__toggle-btn-student {
+    @include btn-design($indigo-600, $indigo-400);
+    width: 100%;
+  }
+
+  &__toggle-btn-faculty {
+    @include btn-design($teal-600, $teal-400);
+    width: 100%;
+  }
+
+  // =============================== profile text =============================== //
+  &__profile {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__profile-img {
+    height: 6rem;
+    width: 6rem;
+    margin: 1.5rem 0 1rem 0;
+  }
+
+  &__profile-text {
+    padding-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  // =============================== user input =============================== //
+  &__input {
+    @include input();
+  }
+
+  &__label {
+    @include label();
+  }
+
+  &__email-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card__input:focus ~ .card__label,
+  .card__input:not(:placeholder-shown).card__input:not(:focus) ~ .card__label {
+    top: -3.65rem;
+    left: 0.8rem;
+    padding: 5px;
+    font-size: 0.8rem;
+    background-color: rgb(255, 255, 255);
+  }
+
+  @include input-autocomplete-animation();
+
+  // =============================== submit button =============================== //
+  &__submit-btn-student {
+    @include btn-login($indigo-600, $indigo-400);
+  }
+
+  &__submit-btn-faculty {
+    @include btn-login($teal-600, $teal-400);
+  }
+
+  // =============================== forgot password link =============================== //
+  &__forgot-password-student {
+    @include link-forgot-password($indigo-600);
+  }
+
+  &__forgot-password-faculty {
+    @include link-forgot-password($teal-600);
+  }
+
+  // =============================== register now link =============================== //
+  &__register-block {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  &__register-now-student {
+    color: $indigo-600;
+  }
+
+  &__register-now-faculty {
+    color: $teal-600;
+  }
+
+  // =============================== horizontal line =============================== //
+  &__hr-student {
+    @include horizontal-line($indigo-600);
+  }
+
+  &__hr-faculty {
+    @include horizontal-line($teal-600);
+  }
+
+  // =============================== registration page =============================== //
+  &__student-login-home {
+    @include btn-login-home($indigo-600, $indigo-400);
+  }
+
+  &__faculty-login-home {
+    @include btn-login-home($teal-600, $teal-400);
+  }
+}
+
+// =============================== registration grid =============================== //
+.grid-container-student {
+  display: grid;
+  gap: 4px;
+  grid-template-areas:
+    "fName fName lName lName"
+    "email email phone phone"
+    "dob dob country country"
+    "address address address address"
+    "university university sid sid"
+    "password password confirm confirm"
+    "register register register register";
+}
+
+.grid-container-faculty {
+  display: grid;
+  gap: 4px;
+  grid-template-areas:
+    "fName fName lName lName"
+    "email email phone phone"
+    "dob dob country country"
+    "university university university university"
+    "password password confirm confirm"
+    "register register register register";
+}
+
+.grid-item-first-name {
+  grid-area: fName;
+}
+
+.grid-item-last-name {
+  grid-area: lName;
+}
+
+.grid-item-email {
+  grid-area: email;
+}
+
+.grid-item-phone {
+  grid-area: phone;
+}
+
+.grid-item-dob {
+  grid-area: dob;
+}
+
+.grid-item-country {
+  grid-area: country;
+}
+
+.grid-item-address {
+  grid-area: address;
+}
+
+.grid-item-company {
+  grid-area: company;
+}
+
+.grid-item-university {
+  grid-area: university;
+}
+
+.grid-item-student-id {
+  grid-area: sid;
+}
+
+.grid-item-password {
+  grid-area: password;
+}
+
+.grid-item-confirm-password {
+  grid-area: confirm;
+}
+
+.grid-item-register {
+  grid-area: register;
+}
+
+@media only screen and (max-width: 768px) {
+  .grid-container-student {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .grid-container-faculty {
+    display: flex;
+    flex-direction: column;
+  }
+}
