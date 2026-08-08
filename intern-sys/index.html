@@ -1,2 +1,216 @@
-<?php
-header("Location: views/archive/archive.php");
+//<?php
+//header("Location: views/archive/archive.php");
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternConnect - CSE311 Project</title>
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary: #0056b3;
+            --secondary: #f4f7f6;
+            --text: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary);
+            color: var(--text);
+        }
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav button {
+            background: none;
+            border: 1px solid white;
+            color: white;
+            padding: 8px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        nav button:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .section {
+            display: none; /* Hide all sections by default */
+        }
+        .section.active {
+            display: block; /* Show the active section */
+        }
+        h2 {
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+            color: var(--primary);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input, select, textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #004494;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>InternConnect</h1>
+        <nav id="nav-menu" style="display: none;">
+            <button onclick="showSection('dashboard')">Profile</button>
+            <button onclick="showSection('archive')">Add Archive</button>
+            <button onclick="showSection('search')">Search</button>
+            <button onclick="logout()">Logout</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+        <div id="login" class="section active">
+            <h2>System Login</h2>
+            <p>Welcome to the Cross-University Internship Management System.</p>
+            <form onsubmit="handleLogin(event)">
+                <input type="email" placeholder="Email Address (e.g., student@nsu.edu)" required>
+                <input type="password" placeholder="Password" required>
+                <select required>
+                    <option value="">Select Role...</option>
+                    <option value="student">Student</option>
+                    <option value="faculty">Faculty</option>
+                </select>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+
+        <div id="dashboard" class="section">
+            <h2>Student Profile</h2>
+            <div class="grid">
+                <div>
+                    <p><strong>Name:</strong> Rahim Uddin</p>
+                    <p><strong>University:</strong> North South University</p>
+                    <p><strong>Student ID:</strong> 20101234</p>
+                </div>
+                <div>
+                    <p><strong>Email:</strong> rahim@nsu.edu</p>
+                    <p><strong>Phone:</strong> 01711000000</p>
+                    <p><strong>Country:</strong> Bangladesh</p>
+                </div>
+            </div>
+            <br>
+            <button class="btn" onclick="alert('In the real PHP system, this would open a form to update SQL data!')">Update Profile Information</button>
+        </div>
+
+        <div id="archive" class="section">
+            <h2>Archive Past Internship Information</h2>
+            <form onsubmit="event.preventDefault(); alert('Archive data submitted! (Static Mockup)');">
+                <div class="grid">
+                    <input type="text" placeholder="Company Name (e.g., bKash)" required>
+                    <input type="text" placeholder="Company Department (e.g., IT)" required>
+                    <input type="text" placeholder="Position (e.g., Software Engineering Intern)" required>
+                    <input type="text" placeholder="Required Skills (e.g., PHP, MySQL)" required>
+                    <input type="date" title="Start Date" required>
+                    <input type="date" title="End Date" required>
+                </div>
+                <textarea rows="4" placeholder="Brief Work Description..." required></textarea>
+                <input type="email" placeholder="Verifying Faculty Email" required>
+                <button type="submit" class="btn">Submit for Verification</button>
+            </form>
+        </div>
+
+        <div id="search" class="section">
+            <h2>Search Archived Internships</h2>
+            <form class="grid" onsubmit="event.preventDefault(); document.getElementById('search-results').style.display='block';">
+                <input type="text" placeholder="Search by Company or Skill...">
+                <select>
+                    <option value="">Filter by University...</option>
+                    <option value="nsu">North South University</option>
+                    <option value="aiub">AIUB</option>
+                </select>
+                <button type="submit" class="btn" style="grid-column: span 2;">Apply Filters</button>
+            </form>
+
+            <div id="search-results" style="display: none; margin-top: 20px;">
+                <div class="card">
+                    <h3>Software Engineering Intern @ bKash</h3>
+                    <p><strong>Student:</strong> Rahim Uddin (North South University)</p>
+                    <p><strong>Skills:</strong> HTML, CSS, PHP</p>
+                    <p><strong>Status:</strong> <span style="color: green;">Verified by Faculty</span></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the target section
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            // Simulate a successful login by showing the dashboard and navbar
+            document.getElementById('nav-menu').style.display = 'block';
+            showSection('dashboard');
+        }
+
+        function logout() {
+            // Simulate logout by hiding navbar and returning to login
+            document.getElementById('nav-menu').style.display = 'none';
+            showSection('login');
+        }
+    </script>
+</body>
+</html>
