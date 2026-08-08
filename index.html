@@ -1,2 +1,299 @@
-<?php
-header("Location: views/archive/archive.php");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternConnect - Internship Archive & Management System</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #ecf0f1;
+            --accent: #3498db;
+            --text: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary);
+            color: var(--text);
+        }
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav button {
+            background: none;
+            border: 1px solid white;
+            color: white;
+            padding: 8px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        nav button:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        h2 {
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+            color: var(--primary);
+            margin-top: 0;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .full-width {
+            grid-column: span 2;
+        }
+        label {
+            font-weight: bold;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #fafafa;
+            margin-bottom: 15px;
+        }
+        .status-pending { color: orange; font-weight: bold; }
+        .status-approved { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>InternConnect</h1>
+        <nav id="nav-menu" style="display: none;">
+            <button onclick="showSection('profile')">My Profile</button>
+            <button onclick="showSection('archive-add')">Add Archive</button>
+            <button onclick="showSection('search')">Search Internships</button>
+            <button onclick="showSection('faculty-approve')" id="nav-faculty" style="display: none;">Approve Archives</button>
+            <button onclick="logout()">Logout</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+        <div id="login" class="section active">
+            <h2>System Login</h2>
+            <form onsubmit="handleAuth(event, 'login')" style="display: flex; flex-direction: column;">
+                <div>
+                    <label>Email Address</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input type="password" required>
+                </div>
+                <div>
+                    <label>Login As</label>
+                    <select id="login-role" required>
+                        <option value="student">Student</option>
+                        <option value="faculty">Faculty</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px;">Don't have an account? <a href="#" onclick="showSection('register')">Register here</a></p>
+        </div>
+
+        <div id="register" class="section">
+            <h2>User Registration</h2>
+            <div style="margin-bottom: 15px;">
+                <label>Register As:</label>
+                <select id="reg-role" onchange="toggleRegFields()">
+                    <option value="student">Student</option>
+                    <option value="faculty">Faculty</option>
+                </select>
+            </div>
+            
+            <form onsubmit="handleAuth(event, 'register')">
+                <div><label>First Name</label><input type="text" required></div>
+                <div><label>Last Name</label><input type="text" required></div>
+                <div><label>Email (Must be unique)</label><input type="email" required></div>
+                <div><label>Phone</label><input type="text" required></div>
+                <div><label>Date of Birth</label><input type="date" required></div>
+                <div><label>Country</label><input type="text" required></div>
+                <div><label>University Name</label><input type="text" required></div>
+                
+                <div class="student-field"><label>Student ID</label><input type="text"></div>
+                <div class="student-field"><label>Address</label><input type="text"></div>
+                
+                <div class="full-width"><label>Password</label><input type="password" required></div>
+                
+                <button type="submit" class="btn full-width">Register Account</button>
+                <p class="full-width" style="text-align: center;">Already registered? <a href="#" onclick="showSection('login')">Back to Login</a></p>
+            </form>
+        </div>
+
+        <div id="profile" class="section">
+            <h2>View / Update Profile Information</h2>
+            <form onsubmit="event.preventDefault(); alert('Profile Update Simulated!');">
+                <div><label>First Name</label><input type="text" value="Rahim"></div>
+                <div><label>Last Name</label><input type="text" value="Uddin"></div>
+                <div><label>Email</label><input type="email" value="rahim@nsu.edu" readonly style="background:#eee;"></div>
+                <div><label>Phone</label><input type="text" value="01711000000"></div>
+                <div><label>Country</label><input type="text" value="Bangladesh"></div>
+                <div><label>University Name</label><input type="text" value="North South University"></div>
+                <div class="full-width"><label>Address</label><input type="text" value="Bashundhara R/A, Dhaka"></div>
+                <button type="submit" class="btn full-width">Update Profile (CRUD)</button>
+            </form>
+        </div>
+
+        <div id="archive-add" class="section">
+            <h2>Archive Past Internship Information</h2>
+            <form onsubmit="event.preventDefault(); alert('Archive Data Inserted!'); showSection('search');">
+                <div><label>Company Name</label><input type="text" required></div>
+                <div><label>Company Department</label><input type="text" required></div>
+                <div><label>Company Position</label><input type="text" required></div>
+                <div><label>Required Skills</label><input type="text" placeholder="e.g. PHP, MySQL, React" required></div>
+                <div><label>Start Date</label><input type="date" required></div>
+                <div><label>End Date</label><input type="date" required></div>
+                <div><label>Company City</label><input type="text"></div>
+                <div><label>Company Country</label><input type="text"></div>
+                <div class="full-width"><label>Company Address</label><input type="text"></div>
+                <div class="full-width"><label>Verifying Faculty Email</label><input type="email" placeholder="faculty@nsu.edu" required></div>
+                <div class="full-width"><label>Work Description</label><textarea rows="4" required></textarea></div>
+                
+                <button type="submit" class="btn full-width">Submit Archive for Verification</button>
+            </form>
+        </div>
+
+        <div id="search" class="section">
+            <h2>Search / Filter Archived Internships</h2>
+            <form onsubmit="event.preventDefault(); document.getElementById('results-area').style.display='block';" style="display:flex; gap:10px;">
+                <input type="text" placeholder="Search skills, company, or position..." style="flex: 2;">
+                <select style="flex: 1;">
+                    <option value="">All Universities</option>
+                    <option value="NSU">North South University</option>
+                    <option value="AIUB">AIUB</option>
+                </select>
+                <button type="submit" class="btn" style="margin-top:0;">Search</button>
+            </form>
+
+            <div id="results-area" style="display: none; margin-top: 20px;">
+                <div class="card">
+                    <h3>Software Engineering Intern @ bKash</h3>
+                    <p><strong>Department:</strong> IT | <strong>City:</strong> Dhaka</p>
+                    <p><strong>Skills:</strong> HTML, CSS, PHP</p>
+                    <p><strong>Dates:</strong> 2023-01-01 to 2023-06-01</p>
+                    <p><strong>Verification:</strong> <span class="status-approved">Approved</span></p>
+                    <button class="btn" style="background:#e74c3c; padding:8px;" onclick="alert('Delete Archive Simulated (CRUD)')">Delete Record</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="faculty-approve" class="section">
+            <h2>Approve Archived Internships</h2>
+            <p>Archives requesting verification from your email address.</p>
+            <div class="card">
+                <h3>Backend Intern @ Robi Axiata</h3>
+                <p><strong>Student ID:</strong> 20101234 (Rahim Uddin)</p>
+                <p><strong>Skills:</strong> Node.js, Express, MySQL</p>
+                <p><strong>Description:</strong> Maintained backend APIs for the payment gateway.</p>
+                <p><strong>Current Status:</strong> <span class="status-pending">Pending</span></p>
+                <div style="margin-top:10px;">
+                    <button class="btn" style="background:green; padding:8px;" onclick="alert('Status updated to Approved (CRUD)')">Approve</button>
+                    <button class="btn" style="background:#e74c3c; padding:8px;" onclick="alert('Status updated to Rejected (CRUD)')">Reject</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            const target = document.getElementById(sectionId);
+            if (target) target.classList.add('active');
+        }
+
+        function toggleRegFields() {
+            const role = document.getElementById('reg-role').value;
+            const studentFields = document.querySelectorAll('.student-field');
+            studentFields.forEach(field => {
+                field.style.display = (role === 'student') ? 'block' : 'none';
+            });
+        }
+
+        function handleAuth(event, type) {
+            event.preventDefault();
+            
+            // Check login role to show/hide faculty-specific UI
+            let role = 'student';
+            if(type === 'login') {
+                role = document.getElementById('login-role').value;
+            } else if (type === 'register') {
+                role = document.getElementById('reg-role').value;
+                alert("Registration successful! Please login.");
+                showSection('login');
+                return;
+            }
+
+            document.getElementById('nav-menu').style.display = 'block';
+            
+            if(role === 'faculty') {
+                document.getElementById('nav-faculty').style.display = 'inline-block';
+                showSection('faculty-approve');
+            } else {
+                document.getElementById('nav-faculty').style.display = 'none';
+                showSection('profile');
+            }
+        }
+
+        function logout() {
+            document.getElementById('nav-menu').style.display = 'none';
+            document.querySelector("form").reset();
+            showSection('login');
+        }
+    </script>
+</body>
+</html>
