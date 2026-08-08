@@ -184,29 +184,48 @@
 
     </div>
 
-    <script>
+ <script>
         function showSection(sectionId) {
-            // Hide all sections
+            // 1. Find all sections in the document
             const sections = document.querySelectorAll('.section');
+            
+            // 2. Hide all of them by removing the 'active' class
             sections.forEach(section => {
                 section.classList.remove('active');
             });
             
-            // Show the target section
-            document.getElementById(sectionId).classList.add('active');
+            // 3. Find the specific section we want to show
+            const targetSection = document.getElementById(sectionId);
+            
+            // 4. Add the 'active' class to show it
+            if (targetSection) {
+                targetSection.classList.add('active');
+                console.log("Successfully switched to page: " + sectionId);
+            } else {
+                console.error("Could not find the page ID: " + sectionId);
+            }
         }
 
         function handleLogin(event) {
-            event.preventDefault();
-            // Simulate a successful login by showing the dashboard and navbar
+            // This is CRITICAL: It stops the page from refreshing!
+            event.preventDefault(); 
+            
+            // Show the top navigation bar
             document.getElementById('nav-menu').style.display = 'block';
+            
+            // Switch to the dashboard
             showSection('dashboard');
         }
 
         function logout() {
-            // Simulate logout by hiding navbar and returning to login
+            // Hide the navigation bar
             document.getElementById('nav-menu').style.display = 'none';
+            
+            // Return to the login screen
             showSection('login');
+            
+            // Optional: Clear any form fields on logout
+            document.querySelector("form").reset();
         }
     </script>
 </body>
