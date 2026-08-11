@@ -154,7 +154,7 @@
       </div>
 
       <div class="box__footer">
-        <span class="box__footer-text">©Team Aurora</span>
+        <span class="box__footer-text">Group 8 NLH</span>
       </div>
 
     </div>
