@@ -1,5 +1,5 @@
 <footer class="container__footer">
   <div class="footer">
-    <span>©Team Aurora</span>
+    <span>Group 8 NLH</span>
   </div>
 </footer>
