@@ -1,3 +1,3 @@
-- <b>Front-end :</b> HTML5, CSS3, Sass, JavaScript, Ajax
+- <b>Front-end :</b> HTML, CSS, Sass, JavaScript, Ajax
 - <b>Back-end :</b> PHP 
 - <b>DBMS :</b> MySQL
